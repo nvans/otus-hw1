@@ -13,18 +13,18 @@ class QuadraticEquationSolver {
      * @return array consisting of two, one or zero roots
      */
     fun solve(a: Double, b: Double, c: Double): Array<Double> {
-        if (a < DEFAULT_EPSILON)
+        if (abs(a) < DEFAULT_EPSILON)
             throw IllegalArgumentException("An argument 'a' must not be equal to zero.")
         if (!(a.isFinite() && b.isFinite() && c.isFinite()))
             throw IllegalArgumentException("Arguments must be finite numbers.")
 
-        val ds = b * b - 4 * a * c;
+        val ds = b * b - 4 * a * c
 
         return when {
-            ds < 0.0 -> {
+            ds < -DEFAULT_EPSILON -> {
                 emptyArray()
             }
-            ds < DEFAULT_EPSILON -> {
+            abs(ds) < DEFAULT_EPSILON -> {
                 val root = -b / (2 * a)
                 arrayOf(root, root)
             }
@@ -38,7 +38,7 @@ class QuadraticEquationSolver {
         }
     }
 
-    private companion object {
-        private const val DEFAULT_EPSILON = 1e-7
+    internal companion object {
+        internal const val DEFAULT_EPSILON = 1e-7
     }
 }
